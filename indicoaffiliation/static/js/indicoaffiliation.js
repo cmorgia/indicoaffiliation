@@ -1,4 +1,4 @@
-var limits = ${ limits };
+var limits = [];
 
 function fetchLimits() {
 	jsonRpc(Indico.Urls.JsonRpcService, 'event.get.limits', {
@@ -121,8 +121,7 @@ function remoteUpdate(event) {
 };
 
 $(function(){
-	$('#inPlaceAddManagerButton').after("<input type=\"button\" id=\"remoteUpdate\" onclick=\"remoteUpdate();\"
-	 value='${ _(\"Update limits\") }'>");
+	$('#inPlaceAddManagerButton[value=\"Add registrar\"]').after("<input type=\"button\" id=\"remoteUpdate\" onclick=\"remoteUpdate();\" value=\"Update limits\">");
 	$('#inPlaceRegistrars').on('listUpdated', decorateList);
 	decorateList();
 });

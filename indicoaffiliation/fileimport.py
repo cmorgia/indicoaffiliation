@@ -8,13 +8,15 @@ from MaKaC.user import AvatarHolder, Avatar, LoginInfo
 
 from MaKaC.webinterface import urlHandlers
 from MaKaC.webinterface.rh.registrantsModif import RHRegistrantListModifAction
+from MaKaC.webinterface.rh.registrationFormDisplay import RHRegistrationFormDisplayBaseCheckProtection, \
+    RHRegistrationFormUserData
 
 
 def decorateCheckParams(fn):
-    def new_funct(*args, **kwargs):
-        fn(*args, **kwargs)
-        self = args[0]
-        params = args[1]
+    def new_funct(self,params):
+        fn(self,params)
+        #self = args[0]
+        #params = args[1]
         self._importCsv = params.has_key("importCsv")
 
     return new_funct
@@ -144,3 +146,13 @@ def _import(self, file):
     return errors
 
 RHRegistrantListModifAction._import = _import
+
+
+def _checkParams(self, params):
+    RHRegistrationFormDisplayBaseCheckProtection._checkParams(self,params)
+    self._existingId = params.get('existingId',None)
+    if self._existingId=='None':
+        self._existingId = None
+    if 'regId' in params:
+        self._existingId = self._conf.getRegistrantById(params.get('regId')).getAvatar().getId()
+RHRegistrationFormUserData._checkParams = _checkParams
