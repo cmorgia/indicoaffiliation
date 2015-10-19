@@ -27,9 +27,11 @@ class IndicoAffiliationPlugin(IndicoPlugin):
             self.inject_css('indicoaffiliation_css', page)
 
         endpointMap["affiliation"]=importModule("indicoaffiliation.rpc.services")
+        endpointMap["ecosoc"]=importModule('MaKaC.services.implementation.ecosoc')
+
 
     def register_assets(self):
-        self.register_js_bundle('indicoaffiliation_js', 'js/indicoaffiliation.js','js/lib/hogan-3.0.2.js')
+        self.register_js_bundle('indicoaffiliation_js', 'js/lib/typeahead.js','js/lib/hogan-3.0.2.js','js/indicoaffiliation.js')
         self.register_css_bundle('indicoaffiliation_css', 'css/indicoaffiliation.css','css/typeahead.css')
         
 
